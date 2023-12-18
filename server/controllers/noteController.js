@@ -1,8 +1,10 @@
+const Note = require("../models/note");
+
 const fetchNotes = async (req, res) => {
   //find note
   const notes = await Note.find();
   //respond with note
-  res.json({ notes: notes });
+  res.json({ notes });
 };
 
 const fetchNote = async (req, res) => {
@@ -11,21 +13,20 @@ const fetchNote = async (req, res) => {
   //find the note using id
   const note = await Note.findById(noteId);
   //respon the note
-  res.json({ note: note });
+  res.json({ note });
 };
 
 const createNote = async (req, res) => {
   //Get the sent in data off request body
-  const titleReq = req.body.title;
-  const bodyReq = req.body.body;
+  const { titleReq, bodyReq } = req.body;
 
   //Create a note with it
   const note = await Note.create({
-    title: titleReq,
-    body: bodyReq,
+    titleReq,
+    bodyReq,
   });
   //respond with the new note
-  res.json({ note: note });
+  res.json({ note });
 };
 
 const updateNote = async (req, res) => {
@@ -33,19 +34,18 @@ const updateNote = async (req, res) => {
   const noteId = req.params.id;
 
   //get data after request body
-  const titleReq = req.body.title;
-  const bodyReq = req.body.body;
+  const { titleReq, bodyReq } = req.body;
 
   //find and update the record or data
   await Note.findByIdAndUpdate(noteId, {
-    title: titleReq,
-    body: bodyReq,
+    titleReq,
+    bodyReq,
   });
 
   //find updated note
   const note = await Note.findById(noteId);
   //Respond with the updated note
-  res.json({ noteRes: note });
+  res.json({ note });
 };
 
 const deleteNote = async (req, res) => {
@@ -57,4 +57,12 @@ const deleteNote = async (req, res) => {
 
   //respond
   res.json({ success: "Record deleted successfully!" });
+};
+
+module.exports = {
+  fetchNotes,
+  fetchNote,
+  createNote,
+  updateNote,
+  deleteNote,
 };
