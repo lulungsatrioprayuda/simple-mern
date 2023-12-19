@@ -34,12 +34,12 @@ const updateNote = async (req, res) => {
   const noteId = req.params.id;
 
   //get data after request body
-  const { titleReq, bodyReq } = req.body;
+  const { title, body } = req.body;
 
   //find and update the record or data
   await Note.findByIdAndUpdate(noteId, {
-    titleReq,
-    bodyReq,
+    title,
+    body,
   });
 
   //find updated note
