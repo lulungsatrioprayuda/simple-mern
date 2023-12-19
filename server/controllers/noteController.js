@@ -18,12 +18,12 @@ const fetchNote = async (req, res) => {
 
 const createNote = async (req, res) => {
   //Get the sent in data off request body
-  const { titleReq, bodyReq } = req.body;
+  const { title, body } = req.body;
 
   //Create a note with it
   const note = await Note.create({
-    titleReq,
-    bodyReq,
+    title,
+    body,
   });
   //respond with the new note
   res.json({ note });
