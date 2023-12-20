@@ -1,24 +1,25 @@
-import { useEffect } from "react";
-import notesStore from "../stores/noteStore";
-import CreateForm from "./CreateForm";
-import Notes from "./Notes";
-import UpdateForm from "./UpdateForm";
+import NotePage from "../pages/NotePage";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import LoginPage from "../pages/LoginPage";
 
 function App() {
-  const store = notesStore();
-  //state
-
-  //use effect
-  useEffect(() => {
-    store.fetchNotes();
-  }, []);
-
   return (
     <>
       <div>
-        <Notes />
-        <UpdateForm />
-        <CreateForm />
+        <BrowserRouter>
+          <ul>
+            <li>
+              <Link to={"/"}>Home</Link>
+            </li>
+            <li>
+              <Link to={"/login"}>Login</Link>
+            </li>
+          </ul>
+          <Routes>
+            <Route index element={<NotePage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </BrowserRouter>
       </div>
     </>
   );
