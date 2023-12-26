@@ -4,15 +4,29 @@ const bcrypt = require("bcryptjs");
 
 async function signup(req, res) {
   try {
-    //get email and password off req body
+    // Dapatkan email dan password dari body request
     const { email, password } = req.body;
 
-    //hass password
+    // Hash password
     const hashedPassword = bcrypt.hashSync(password, 8);
 
-    //create a user with the data from req
+    // Buat user dengan data dari request
     await User.create({ email, password: hashedPassword });
-    //response
+
+    // Setelah user berhasil dibuat, buat token JWT
+    const user = await User.findOne({ email });
+    const exp = Date.now() + 1000 * 60 * 60 * 24 * 30;
+    const token = jwt.sign({ sub: user._id, exp }, process.env.SECRET);
+
+    // Set cookie dengan token JWT
+    res.cookie("Authorization", token, {
+      expires: new Date(exp),
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    // Berikan respons dengan status 200 (OK)
     res.sendStatus(200);
   } catch (err) {
     console.log(err);
