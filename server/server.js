@@ -39,11 +39,11 @@ app.get("/logout", userController.logout);
 app.get("/check-auth", requireAuth, userController.checkAuth);
 
 //Notes
-app.get("/notes", noteController.fetchNotes);
-app.get("/notes/:id", noteController.fetchNote);
-app.post("/notes", noteController.createNote);
-app.put("/notes/:id", noteController.updateNote);
-app.delete("/notes/:id", noteController.deleteNote);
+app.get("/notes", requireAuth, noteController.fetchNotes);
+app.get("/notes/:id", requireAuth, noteController.fetchNote);
+app.post("/notes", requireAuth, noteController.createNote);
+app.put("/notes/:id", requireAuth, noteController.updateNote);
+app.delete("/notes/:id", requireAuth, noteController.deleteNote);
 
 //Start Our server
 app.listen(process.env.PORT);

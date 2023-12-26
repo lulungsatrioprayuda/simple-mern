@@ -46,14 +46,20 @@ const authStore = create((set) => ({
       withCredentials: true,
     });
 
-    set({ checkLoggedIn: true });
+    set({
+      checkLoggedIn: true,
+      loginForm: {
+        email: "",
+        password: "",
+      },
+    });
 
     console.log(res);
   },
 
   checkAuth: async (e) => {
     try {
-      await axios.get("/check-auth", { withCredentials: true });
+      await axios.get("/check-auth");
       set({ checkLoggedIn: true });
     } catch (err) {
       console.log(err);
@@ -67,7 +73,19 @@ const authStore = create((set) => ({
     const res = await axios.post("/signup", signupForm, {
       withCredentials: true,
     });
+
+    set({
+      signupForm: {
+        email: "",
+        password: "",
+      },
+    });
     console.log(res);
+  },
+
+  logout: async () => {
+    await axios.get("/logout");
+    set({ checkLoggedIn: false });
   },
 }));
 

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import RequireAuth from "./RequireAuth";
 import SignupPage from "../pages/SignupPage";
+import LogoutPage from "../pages/LogoutPage";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
             <li>
               <Link to={"/signup"}>Signup</Link>
             </li>
+            <li>
+              <Link to={"/logout"}>Log out</Link>
+            </li>
           </ul>
           <Routes>
             <Route
@@ -31,6 +35,7 @@ function App() {
             />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/logout" element={<LogoutPage />} />
           </Routes>
         </BrowserRouter>
       </div>
